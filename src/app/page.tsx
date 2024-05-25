@@ -1,95 +1,61 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client"
+import React, { useState } from 'react';
 
-export default function Home() {
+const initialWorkers = [
+  { id: 1, name: "Alice Johnson", salary: 50000 },
+  { id: 2, name: "Bob Smith", salary: 55000 },
+  { id: 3, name: "Charlie Davis", salary: 60000 },
+  { id: 4, name: "Dana Lee", salary: 62000 },
+  { id: 5, name: "Eve Brown", salary: 58000 },
+  { id: 6, name: "Frank Harris", salary: 53000 },
+  { id: 7, name: "Grace Wilson", salary: 54000 },
+  { id: 8, name: "Hank Thompson", salary: 52000 },
+  { id: 9, name: "Ivy Martinez", salary: 57000 },
+  { id: 10, name: "Jack White", salary: 61000 },
+  { id: 11, name: "Karen Black", salary: 59000 },
+  { id: 12, name: "Leo Green", salary: 56000 },
+  { id: 13, name: "Mona Hall", salary: 60000 },
+  { id: 14, name: "Nina King", salary: 63000 },
+  { id: 15, name: "Oscar Scott", salary: 61000 },
+  { id: 16, name: "Paul Young", salary: 62000 },
+  { id: 17, name: "Quinn Adams", salary: 64000 },
+  { id: 18, name: "Rachel Carter", salary: 65000 },
+  { id: 19, name: "Sam Evans", salary: 67000 },
+  { id: 20, name: "Tina Baker", salary: 66000 }
+];
+
+function App() {
+  const [workers, setWorkers] = useState(initialWorkers);
+
+  const increaseSalary = (id: number) => {
+    setWorkers(workers.map(worker =>
+      worker.id === id ? { ...worker, salary: worker.salary + 100 } : worker
+    ));
+  };
+
+  const decreaseSalary = (id: number) => {
+    setWorkers(workers.map(worker =>
+      worker.id === id ? { ...worker, salary: worker.salary - 100 } : worker
+    ));
+  };
+
+  const removeWorker = (id: number) => {
+    setWorkers(workers.filter(worker => worker.id !== id));
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div>
+      {workers.map(worker => (
+        <div key={worker.id}>
+          <h2>{worker.name}</h2>
+          <p>Salary: ${worker.salary}</p>
+          <button onClick={() => increaseSalary(worker.id)}>Increase Salary</button>
+          <button onClick={() => decreaseSalary(worker.id)}>Decrease Salary</button>
+          <button onClick={() => removeWorker(worker.id)}>Remove Worker</button>
         </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      ))}
+    </div>
   );
 }
+
+export default App;
